@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meme Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#1a1a1a; /* dark gray background */
+      --deep:#ffffff; /* white text */
+      --muted:#cccccc; /* light gray text */
+      --viral:#FF4C4C; /* red for viral */
+      --auth:#00C897; /* green for asli */
+      --accent:#00A8E8; /* blue accent */
+      --card-bg:#2a2a2a; /* medium gray cards */
+      --radius:12px;
+      --shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:var(--deep); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    .app{display:flex;min-height:100vh;gap:24px;padding:24px}
+
+    /* Sidebar */
+    .sidebar{width:260px;background:linear-gradient(180deg,#2a2a2a, #1a1a1a);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.1)}
+    .logo{font-family:Poppins, Inter;font-weight:700;font-size:20px;color:var(--deep);margin-bottom:18px}
+    .nav{display:flex;flex-direction:column;gap:10px}
+    .nav button{border:0;background:transparent;text-align:left;padding:10px;border-radius:10px;cursor:pointer;font-weight:600;color:var(--deep)}
+    .nav button:hover{background:rgba(0,168,232,0.06)}
+
+    /* Main */
+    .main{flex:1;display:flex;flex-direction:column;gap:16px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 8px}
+    .title{font-family:Poppins, Inter;font-weight:700;font-size:20px;color:var(--deep)}
+    .search{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);width:320px;background:#2a2a2a;color:#ffffff;box-shadow:0 2px 6px rgba(0,0,0,0.3)}
+
+    /* Sections */
+    .section{background:var(--card-bg);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(30,30,30,0.04)}
+    .section h2{font-family:Poppins;margin-bottom:8px}
+    .label-muted{font-size:13px;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+    .card{background:var(--card-bg);border-radius:10px;padding:10px;border:1px solid rgba(30,30,30,0.05);box-shadow:0 4px 12px rgba(30,30,30,0.04);transition:transform .18s ease, box-shadow .18s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 10px 28px rgba(30,30,30,0.08)}
+    .media{height:110px;border-radius:8px;background:linear-gradient(180deg,#f0f4f8,#e9eef5);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600;margin-bottom:10px}
+    .label{font-weight:600;margin-bottom:8px;color:var(--deep)}
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{padding:8px 10px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+    .btn-download{background:var(--viral);color:#fff}
+    .btn-share{background:var(--accent);color:#fff}
+    .btn-plus{background:var(--accent);color:#fff;border-radius:50%;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+
+    /* badges */
+    .badge{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#fff}
+    .badge.viral{background:var(--viral)}
+    .badge.auth{background:var(--auth)}
+
+    /* sticker row */
+    .sticker-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .sticker-card{width:120px;border-radius:10px;padding:10px;background:linear-gradient(180deg,#2a2a2a,#1a1a1a);border:1px solid rgba(255,255,255,0.1);text-align:center;box-shadow:var(--shadow)}
+    .plus{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;font-weight:700;border:0;cursor:pointer}
+
+    /* doksli content */
+    #doksliContent{display:none;flex-direction:column;gap:12px}
+    .doksli-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+    .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.logo-img {
+  width: 120px; /* sesuaikan ukuran logo */
+  height: auto;
+  border-radius: 10px; /* opsional, buat sudut lembut */
+}
+
+.logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #cccccc; /* light gray for dark theme */
+  text-align: center;
+}
+
+    /* responsive */
+    @media(max-width:900px){
+      .app{flex-direction:column;padding:12px}
+      .sidebar{width:100%;display:flex;flex-direction:row;gap:12px;overflow:auto}
+      .search{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="resource/logomeme.png" alt="Logo Meme Collection" class="logo-img">
+        <span class="logo-text">Collect Memes</span>
+      </div>
+
+      <nav class="nav">
+        <span>Meme Collection</span>
+        <button data-view="home">Home</button>
+        <button data-view="doksli-video">Video</button>
+        <button data-view="doksli-foto">Foto</button>
+        <button data-view="doksli-stiker">Stiker</button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div id="originalContent">
+        <div class="topbar">
+          <div class="title">Meme Collection</div>
+          <input class="search" placeholder="Cari meme, video, foto, stiker..." />
+        </div>
+
+        <section class="section" id="viralSection">
+          <h2>Meme yang sedang viral (Video)</h2>
+          <p class="label-muted">Konten viral terbaru — ditandai dengan badge <span class="badge viral">VIRAL</span></p>
+          <img src="resource/video utama.png" style="border-radius:10px;width:100%;height:260px;object-fit:cover;margin:12px 0;box-shadow:0 6px 18px rgba(30,30,30,0.04)" alt="Video Utama">
+
+          <div class="grid" id="videoGrid">
+            <div class="card">
+              <div class="media">Thumb Video</div>
+              <div class="label">Judul video viral 1</div>
+              <div class="actions"><span class="badge viral">VIRAL</span><div style="flex:1"></div><button class="btn btn-download">Download</button></div>
+            </div>
+            <div class="card">
+              <div class="media">Thumb Video</div>
+              <div class="label">Judul video viral 2</div>
+              <div class="actions"><span class="badge viral">VIRAL</span><div style="flex:1"></div><button class="btn btn-download">Download</button></div>
+            </div>
+            <div class="card">
+              <div class="media">Thumb Video</div>
+              <div class="label">Judul video viral 3</div>
+              <div class="actions"><span class="badge viral">VIRAL</span><div style="flex:1"></div><button class="btn btn-download">Download</button></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="fotoSection">
+          <h2>Foto (Meme)</h2>
+          <p class="label-muted">Koleksi foto meme</p>
+          <div class="grid" id="fotoGrid">
+            <div class="card"><div class="media">Foto</div><div class="label">Foto viral 1</div><div class="actions"><span class="badge viral">VIRAL</span><div style="flex:1"></div><button class="btn btn-download">Download</button></div></div>
+            <div class="card"><div class="media">Foto</div><div class="label">Foto viral 2</div><div class="actions"><span class="badge viral">VIRAL</span><div style="flex:1"></div><button class="btn btn-download">Download</button></div></div>
+          </div>
+        </section>
+
+        <section class="section" id="stikerSection">
+          <h2>Stiker</h2>
+          <p class="label-muted">Katalog stiker viral — tambahkan ke tray dengan tombol <strong>+</strong></p>
+          <div class="sticker-row" id="stickerRow">
+            <div class="sticker-card"><div style="height:80px;border-radius:8px;display:flex;align-items:center;justify-content:center">Stiker 1</div><div style="margin-top:8px"><button class="plus">+</button></div></div>
+            <div class="sticker-card"><div style="height:80px;border-radius:8px;display:flex;align-items:center;justify-content:center">Stiker 2</div><div style="margin-top:8px"><button class="plus">+</button></div></div>
+          </div>
+        </section>
+      </div>
+
+      <div id="doksliContent">
+        <div class="doksli-top">
+          <div class="title" id="doksliTitle">Meme Collection — Video</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn" id="backHome" style="background:transparent;border:1px solid rgba(30,30,30,0.06);padding:8px 10px;border-radius:8px">← Kembali</button>
+          </div>
+        </div>
+        <div id="doksliBody"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Views
+    const original = document.getElementById('originalContent');
+    const doksliView = document.getElementById('doksliContent');
+    const doksliBody = document.getElementById('doksliBody');
+    const doksliTitle = document.getElementById('doksliTitle');
+
+    document.querySelectorAll('.nav button[data-view]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const view = btn.getAttribute('data-view');
+        if(view==='home'){
+          doksliView.style.display='none';
+          original.style.display='block';
+        } else {
+          original.style.display = 'none';
+          doksliView.style.display = 'flex';
+          if(view==='doksli-video'){
+            doksliTitle.textContent = 'Meme Collection — Video Catalog';
+            doksliBody.innerHTML = '<section class="section"><h2>Video Catalog</h2><p class="label-muted">Source for memes — marked <span class="badge auth">AUTHENTIC</span></p><div class="grid">'+
+              Array.from({length:8},(_,i)=>{ let num = 8 - i; return `<div class="card"><img src="resource/video ${num}.png" style="width:100%; height:110px; border-radius:8px; object-fit:cover;" alt="Video ${num}"><div class="label">Video ${num}</div><div class="actions"><button class="btn btn-share">Share</button><div style="flex:1"></div><button class="btn btn-download">Download</button></div></div>`; }).join('')+
+            '</div></section>';
+          }
+          if(view==='doksli-foto'){
+            doksliTitle.textContent = 'Meme Collection — Photo Catalog';
+            doksliBody.innerHTML = '<section class="section"><h2>Photo Catalog</h2><p class="label-muted">Source for photo memes — marked <span class="badge auth">AUTHENTIC</span></p><div class="grid">'+
+              Array.from({length:8},(_,i)=>`<div class="card"><img src="resource/meme ${i+1}.jpg" style="width:100%; height:110px; border-radius:8px; object-fit:cover;" alt="Meme ${i+1}"><div class="label">Meme ${i+1}</div><div class="actions"><button class="btn btn-share">Share</button><div style="flex:1"></div><button class="btn btn-download">Download</button></div></div>`).join('')+
+            '</div></section>';
+          }
+          if(view==='doksli-stiker'){
+            doksliTitle.textContent = 'Meme Collection — Sticker Catalog';
+            doksliBody.innerHTML = '<section class="section"><h2>Sticker Catalog</h2><p class="label-muted">Stickers — add to tray with the <strong>+</strong> button</p><div class="sticker-row">'+
+              Array.from({length:8},(_,i)=>`<div class="sticker-card"><img src="resource/stiker ${i+1}.jpg" style="width:100%; height:80px;border-radius:8px;object-fit:cover;" alt="Stiker ${i+1}"><div style="margin-top:8px"><button class="plus" data-sticker="Stiker ${i+1}">+</button></div></div>`).join('')+
+            '</div></section>';
+            // attach plus handlers after DOM insertion
+            setTimeout(()=>{
+              document.querySelectorAll('#doksliBody .plus').forEach(p=>{
+                p.addEventListener('click', ()=>{
+                  alert(p.getAttribute('data-sticker') + " ditambahkan ke tray (simulasi).");
+                });
+              });
+            },50);
+          }
+        }
+      });
+    });
+
+    document.getElementById('backHome').addEventListener('click', ()=>{
+      doksliView.style.display='none';
+      original.style.display='block';
+    });
+
+    // Sample interactions: download and plus (simulation)
+    document.addEventListener('click',(e)=>{
+      if(e.target.matches('.btn-download')){
+        alert('Simulasi: memulai download file (tidak nyata pada wireframe).');
+      }
+      if(e.target.matches('.plus') && e.target.closest('#originalContent')){
+        alert('Simulasi: menambahkan stiker ke tray (Home).');
+      }
+    });
+  </script>
+</body>
+</html>
