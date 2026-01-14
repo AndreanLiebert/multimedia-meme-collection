@@ -1,0 +1,3 @@
+- Update lightbox JS to scale images/videos to fill container on mobile
+- Add responsive grid media queries for better mobile layout
+- Verify changes improve mobile responsiveness

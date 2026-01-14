@@ -94,6 +94,16 @@
       .search{width:100%}
     }
 
+    @media(max-width:600px){
+      .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+      .card .media{height:90px}
+    }
+
+    @media(max-width:480px){
+      .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+      .card .media{height:80px}
+    }
+
     /* Lightbox styles */
     .lightbox {
       display: none;
@@ -135,8 +145,13 @@
 
     @media (max-width: 768px) {
       .lightbox-content {
-        max-width: 95%;
-        max-height: 95%;
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        top: 0;
+        left: 0;
+        transform: none;
       }
       .close {
         top: 10px;
@@ -392,7 +407,9 @@
     const closeBtn = document.querySelector('.close');
 
     function openLightbox(src, isVideo = false) {
-      lightboxContent.innerHTML = isVideo ? `<video src="${src}" controls autoplay style="max-width:100%; max-height:100%; border-radius:8px;"></video>` : `<img src="${src}" style="max-width:100%; max-height:100%; border-radius:8px;" alt="">`;
+      const isMobile = window.innerWidth <= 768;
+      const style = isMobile ? 'width:100%; height:100%; object-fit:contain; border-radius:8px;' : 'max-width:100%; max-height:100%; border-radius:8px;';
+      lightboxContent.innerHTML = isVideo ? `<video src="${src}" controls autoplay style="${style}"></video>` : `<img src="${src}" style="${style}" alt="">`;
       lightbox.style.display = 'block';
       document.body.style.overflow = 'hidden'; // Disable scroll
     }
